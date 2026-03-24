@@ -1,24 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h2>Listing Details</h2>
-    <ul>
-        <li><%= listing.title %></li>
-        <li><%= listing.description %></li>
-        <li>&#8377;<%= listing.price.toLocaleString("en-IN") %></li>
-        <li><%= listing.location %></li>
-        <li><%= listing.country %></li>
-    </ul>
-    <br>
-    <a href="/listings/<%= listing._id %>/edit">Edit this listing</a>
-    <br>
-    <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
-        <button>Delete Listing</button>
-    </form>
-</body>
-</html>
+<% layout('/layouts/boilerplate') -%>
+
+    <body>
+        <div class="flex flex-col justify-center w-[70vw] mx-auto gap-6">
+            <div class="flex flex-col justify-center items-center">
+                <h2 class="text-2xl font-semibold mb-6">
+                    <%= listing.title %>
+                </h2>
+                <div class="w-[70vw] mb-6">
+                    <img class="w-full h-124 object-cover rounded-2xl" src="<%= listing.image.url %>" alt="">
+                </div>
+            </div>
+            <div class="info flex flex-col gap-2 w-[70vw] mx-auto">
+                <p class="font-semibold text-lg">
+                    <%= listing.description %>
+                </p>
+                <p>&#8377;<%= listing.price.toLocaleString("en-IN") %>/night</p>
+                <p>
+                    <%= listing.location %>
+                </p>
+                <p>
+                    <%= listing.country %>
+                </p>
+                <div class="flex gap-3 mt-4">
+                    <a href="/listings/<%= listing._id %>/edit"
+                        class="bg-[#FF5A5F] text-white px-3 py-2 rounded-lg w-34 text-center">Edit this listing</a>
+                    <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
+                        <button class="bg-black text-white px-3 py-2 rounded-lg w-34">Delete</button>
+                    </form>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="info flex flex-col gap-2 w-[70vw] mx-auto">
+                <h3 class="text-xl font-semibold">Leave a Review</h3>
+                <form action="/listings/<%= listing.id %>/reviews" method="POST" class="flex flex-col gap-3" id="form"
+                    novalidate>
+                    <div class="rating flex gap-2 items-center">
+                        <label for="rating">Rating:</label>
+                        <input type="range" min="1" max="5" id="rating" name="review[rating]">
+                    </div>
+                    <div class="flex flex-col ">
+                        <label for="comment">Write your feedback:</label>
+                        <textarea class="border outline-none w-100 h-34 rounded-xl px-3 py-2" name="review[comment]"
+                            id="comment" required></textarea>
+                        <p class="invalid-feedback hidden text-red-600 text-sm mt-1">Leave a Comment!</p>
+                    </div>
+
+                    <button type="submit" class="border w-fit px-4 py-1 rounded-lg cursor-pointer bg-black text-white">Submit</button>
+                </form>
+            </div>
+
+            <hr>
+
+            <div class="flex flex-col gap-3">
+                <h3 class="text-xl font-semibold">All Reviews</h3>
+                <div class="flex gap-5 flex-wrap">
+                <% for(review of listing.reviews) { %>
+
+                    <div class="card border rounded-xl w-[30vw] px-6 py-3">
+                        <div class="card-title font-semibold">Jane Doe</div>
+                        <div class="card-text">
+                            <%= review.comment %>
+                        </div>
+                        <div class="card-text flex items-center justify-between">
+                            <p>Rating: <%= review.rating %>/5</p>
+                            <form action="/listings/<%= listing.id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
+                                <button class="flex justify-center items-center"><img class="h-5" src="/images/bin.svg" alt=""></button>
+                            </form>
+                        </div>
+                    </div>
+                <% } %>
+                </div>
+            </div>
+        </div>
+    </body>
