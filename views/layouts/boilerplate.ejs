@@ -8,7 +8,10 @@
 </head>
 <body>
     <%- include("../includes/navbar.ejs") %>
-    <div class="container px-24 py-4 min-h-screen"><%- body %></div>
+    <div class="container px-24 py-4 min-h-screen">
+        <%- include("../includes/flash.ejs") %>
+        <%- body %>
+    </div>
     <%- include("../includes/footer.ejs") %>
 
     <script src="/js/script.js"></script>
