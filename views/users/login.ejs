@@ -1,0 +1,30 @@
+<% layout('/layouts/boilerplate') -%>
+
+    <body>
+        <div class="flex justify-center items-center py-12">
+            <div class="flex flex-col gap-3 w-[40vw]">
+                <h2 class="text-2xl font-semibold">Login</h2>
+
+                <form method="POST" action="/login" class="flex flex-col gap-5 w-full"
+                    id="form" novalidate>
+                    <div>
+                        <label for="username" class="text-fg-success-strong">Username</label>
+                        <input type="text" name="username" id="username"
+                            class="bg-success-soft border border-success-subtle text-fg-success-strong px-3 py-2 rounded-lg w-full" required>
+                        <p class="invalid-feedback hidden text-red-600 text-sm mt-1">
+                            Title is required!
+                        </p>
+                    </div>
+                    <div>
+                        <label for="password" class="text-fg-success-strong">Password</label>
+                        <input type="password" name="password" id="password"
+                            class="bg-success-soft border border-success-subtle text-fg-success-strong px-3 py-2 rounded-lg w-full" required>
+                        <p class="invalid-feedback hidden text-red-600 text-sm mt-1">
+                            Title is required!
+                        </p>
+                    </div>
+                    <button class="bg-[#FF5A5F] text-white px-6 py-2 rounded-lg w-fit mx-auto">Sign Up</button>
+                </form>
+            </div>
+        </div>
+    </body>
