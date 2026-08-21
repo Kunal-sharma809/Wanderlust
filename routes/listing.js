@@ -4,6 +4,7 @@ const Listing = require('../models/listing.js');
 const wrapAsync = require('../utils/wrapAsync.js');
 const ExpressError = require('../utils/ExpressError.js');
 const { listingSchema } = require("../schema.js");
+const { isLoggedIn } = require('../middleware.js');
 
 
 // Validate Listing Function: For validating schema
@@ -26,7 +27,7 @@ router.get("/", wrapAsync( async (req, res) => {
 
 
 // New Route: To make any new listing by yourself
-router.get("/new", (req, res) => {
+router.get("/new", isLoggedIn, (req, res) => {
     res.render("./listings/new.ejs");
 })
 
@@ -53,7 +54,7 @@ router.post("/", validateListing, wrapAsync(async (req, res, next) => {
 
 
 // Edit Route: To edit some information in any listing
-router.get("/:id/edit", wrapAsync( async (req, res) => {
+router.get("/:id/edit", isLoggedIn, wrapAsync( async (req, res) => {
     let { id } = req.params;
     const listing = await Listing.findById(id);
     if(!listing) {
@@ -65,7 +66,7 @@ router.get("/:id/edit", wrapAsync( async (req, res) => {
 
 
 // Update Route: To update the info sent through put request in edit form
-router.put("/:id", validateListing, wrapAsync( async (req, res) => {
+router.put("/:id", isLoggedIn, validateListing, wrapAsync( async (req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndUpdate(id, {...req.body.listing});
     req.flash("success", "Listing Updated!");
@@ -74,7 +75,7 @@ router.put("/:id", validateListing, wrapAsync( async (req, res) => {
 
 
 // Delete Listing: To delete the showing listing
-router.delete("/:id", wrapAsync( async (req, res) => {
+router.delete("/:id", isLoggedIn, wrapAsync( async (req, res) => {
     let { id } = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id);
     req.flash("success", "Listing Deleted!");

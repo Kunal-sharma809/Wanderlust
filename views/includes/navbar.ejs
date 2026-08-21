@@ -3,7 +3,7 @@
         <img src="/images/logo.webp" class="w-28 h-14 text-black object-cover" alt="Airbnb logo">
     </div>
     <ul class="flex gap-8">
-        <li><a href="">Home</a></li>
+        <li><a href="/listings">Home</a></li>
         <li><a href="/listings">All listings</a></li>
         <form method="GET" action="/listings/new">
             <button class="cursor-pointer">New Listing</button>
@@ -11,12 +11,17 @@
         
     </ul>
     <ul class="flex items-center gap-4">
-        <li>Become a host</li>
-        <li class="bg-gray-100 p-2 rounded-full">
-            <img class="h-5 w-5" src="/images/globe.svg" alt="">
-        </li>
-        <li class="bg-gray-100 p-2 rounded-full">
-            <img class="h-5 w-5" src="/images/hamburger.svg" alt="">
-        </li>
+        <% if(!currUser) { %>
+            <li><a href="/signup">Become a host</a></li>
+            <li class="bg-gray-100 p-2 rounded-full">
+                <img class="h-5 w-5" src="/images/globe.svg" alt="">
+            </li>
+            <li><a href="/login">Login</a></li>
+        <% } else { %>
+            <!-- <li class="bg-gray-100 p-2 px-3 rounded-full"> <a href="/login">SignIn</a>
+                <img class="h-5 w-5" src="/images/hamburger.svg" alt="">
+            </li> -->
+            <li class="bg-gray-100 p-2 px-3 rounded-full"> <a href="/logout">SignOut</a></li>
+        <% } %>
     </ul>
 </nav>
