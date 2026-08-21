@@ -11,6 +11,7 @@
                 </div>
             </div>
             <div class="info flex flex-col gap-2 w-[70vw] mx-auto">
+                <p><i>Owned by: <%= listing.owner.username %></i></p>
                 <p class="font-semibold text-lg">
                     <%= listing.description %>
                 </p>
@@ -47,7 +48,8 @@
                         <p class="invalid-feedback hidden text-red-600 text-sm mt-1">Leave a Comment!</p>
                     </div>
 
-                    <button type="submit" class="border w-fit px-4 py-1 rounded-lg cursor-pointer bg-black text-white">Submit</button>
+                    <button type="submit"
+                        class="border w-fit px-4 py-1 rounded-lg cursor-pointer bg-black text-white">Submit</button>
                 </form>
             </div>
 
@@ -56,21 +58,23 @@
             <div class="flex flex-col gap-3">
                 <h3 class="text-xl font-semibold">All Reviews</h3>
                 <div class="flex gap-5 flex-wrap">
-                <% for(review of listing.reviews) { %>
+                    <% for(review of listing.reviews) { %>
 
-                    <div class="card border rounded-xl w-[30vw] px-6 py-3">
-                        <div class="card-title font-semibold">Jane Doe</div>
-                        <div class="card-text">
-                            <%= review.comment %>
+                        <div class="card border rounded-xl w-[30vw] px-6 py-3">
+                            <div class="card-title font-semibold">Jane Doe</div>
+                            <div class="card-text">
+                                <%= review.comment %>
+                            </div>
+                            <div class="card-text flex items-center justify-between">
+                                <p>Rating: <%= review.rating %>/5</p>
+                                <form action="/listings/<%= listing.id %>/reviews/<%= review._id %>?_method=DELETE"
+                                    method="POST">
+                                    <button class="flex justify-center items-center"><img class="h-5"
+                                            src="/images/bin.svg" alt=""></button>
+                                </form>
+                            </div>
                         </div>
-                        <div class="card-text flex items-center justify-between">
-                            <p>Rating: <%= review.rating %>/5</p>
-                            <form action="/listings/<%= listing.id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
-                                <button class="flex justify-center items-center"><img class="h-5" src="/images/bin.svg" alt=""></button>
-                            </form>
-                        </div>
-                    </div>
-                <% } %>
+                        <% } %>
                 </div>
             </div>
         </div>
