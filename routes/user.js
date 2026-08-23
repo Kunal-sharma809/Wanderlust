@@ -5,39 +5,18 @@ const wrapAsync = require('../utils/wrapAsync');
 const passport = require('passport');
 const { saveRedirectedUrl } = require('../middleware.js');
 
+const userController = require('../controllers/users.js')
+
 
 // Get request for signup User: New user should register
-router.get("/signup", (req, res) => {
-    res.render("users/signup.ejs");
-});
+router.get("/signup", userController.renderSignupForm);
 
 // Post request for getting info from the form user filled
-router.post("/signup", wrapAsync(async (req, res) => {
-    try{
-        let { username, email, password } = req.body;
-        const newUser = new User({ email, username });
-    
-        const regUser = await User.register(newUser, password);
-        console.log(regUser);
-
-        req.login(regUser, (err) => {
-            if(err) {
-                return next(err);
-            }
-            req.flash("success", "Welcome to Wanderlust");
-            res.redirect("/listings");
-        })
-    } catch(err) {
-        req.flash("error", err.message);
-        res.redirect("/signup");
-    }
-}));
+router.post("/signup", wrapAsync(userController.signup));
 
 
 // Get request for login user
-router.get("/login", (req, res) => {
-    res.render("users/login.ejs");
-});
+router.get("/login", userController.renderLoginForm);
 
 
 // Post request for checking if user exists and with correct credentials
@@ -47,21 +26,10 @@ router.post(
     passport.authenticate("local", {
     failureRedirect: "/login",
     failureFlash: true }),
-    async (req, res) => {
-        req.flash("success", "Welcome back to Wanderlust!");
-        let redirectUrl = res.locals.redirectUrl || "/listings";
-        res.redirect(redirectUrl);
-})
+    userController.login
+)
 
 // Logout Route
-router.get('/logout', (req, res) => {
-    req.logout((err) => {
-        if(err) {
-            return next(err);
-        }
-        req.flash("success", "Logged you out!");
-        res.redirect("/listings");
-    })
-})
+router.get('/logout', userController.logout)
 
 module.exports = router;
