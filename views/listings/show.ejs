@@ -30,7 +30,7 @@
                             <button class="bg-black text-white px-3 py-2 rounded-lg w-34">Delete</button>
                         </form>
                     </div>
-                <% } %>
+                    <% } %>
             </div>
 
             <hr>
@@ -38,48 +38,65 @@
             <% if(currUser) { %>
                 <div class="info flex flex-col gap-2 w-[70vw] mx-auto">
                     <h3 class="text-xl font-semibold">Leave a Review</h3>
-                    <form action="/listings/<%= listing.id %>/reviews" method="POST" class="flex flex-col gap-3" id="form"
-                        novalidate>
-                        <div class="rating flex gap-2 items-center">
+                    <form action="/listings/<%= listing.id %>/reviews" method="POST" class="flex flex-col gap-3"
+                        id="form" novalidate>
+                        <div class="rating flex flex-col gap-2  w-fit">
                             <label for="rating">Rating:</label>
-                            <input type="range" min="1" max="5" id="rating" name="review[rating]">
+                            <fieldset class="starability-basic">
+                                <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked
+                                    aria-label="No rating." />
+                                <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                                <label for="first-rate1" title="Terrible">1 star</label>
+                                <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                                <label for="first-rate2" title="Not good">2 stars</label>
+                                <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                                <label for="first-rate3" title="Average">3 stars</label>
+                                <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                                <label for="first-rate4" title="Very good">4 stars</label>
+                                <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                                <label for="first-rate5" title="Amazing">5 stars</label>
+                            </fieldset>
                         </div>
+
+
                         <div class="flex flex-col ">
                             <label for="comment">Write your feedback:</label>
                             <textarea class="border outline-none w-100 h-34 rounded-xl px-3 py-2" name="review[comment]"
                                 id="comment" required></textarea>
                             <p class="invalid-feedback hidden text-red-600 text-sm mt-1">Leave a Comment!</p>
                         </div>
-    
+
                         <button type="submit"
                             class="border w-fit px-4 py-1 rounded-lg cursor-pointer bg-black text-white">Submit</button>
                     </form>
                 </div>
                 <hr>
-            <% } %>
+                <% } %>
 
 
-            <div class="flex flex-col gap-3">
-                <h3 class="text-xl font-semibold">All Reviews</h3>
-                <div class="flex gap-5 flex-wrap">
-                    <% for(review of listing.reviews) { %>
+                    <div class="flex flex-col gap-3">
+                        <h3 class="text-xl font-semibold">All Reviews</h3>
+                        <div class="flex gap-5 flex-wrap">
+                            <% for(review of listing.reviews) { %>
 
-                        <div class="card border rounded-xl w-[30vw] px-6 py-3">
-                            <div class="card-title font-semibold">@<%= review.author.username %></div>
-                            <div class="card-text">
-                                <%= review.comment %>
-                            </div>
-                            <div class="card-text flex items-center justify-between">
-                                <p>Rating: <%= review.rating %>/5</p>
-                                <form action="/listings/<%= listing.id %>/reviews/<%= review._id %>?_method=DELETE"
-                                    method="POST">
-                                    <button class="flex justify-center items-center"><img class="h-5"
-                                            src="/images/bin.svg" alt=""></button>
-                                </form>
-                            </div>
+                                <div class="card border rounded-xl w-[30vw] px-6 py-3">
+                                    <div class="card-title font-semibold">@<%= review.author.username %>
+                                        <p class="starability-result mb-5" data-rating="<%= review.rating %>"></p>
+                                    </div>
+                                    <div class="card-text flex items-center justify-between">
+                                        <div class="card-text">
+                                            <%= review.comment %>
+                                        </div>
+                                        <form
+                                            action="/listings/<%= listing.id %>/reviews/<%= review._id %>?_method=DELETE"
+                                            method="POST">
+                                            <button class="flex justify-center items-center"><img class="h-5"
+                                                    src="/images/bin.svg" alt=""></button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <% } %>
                         </div>
-                        <% } %>
-                </div>
-            </div>
+                    </div>
         </div>
     </body>

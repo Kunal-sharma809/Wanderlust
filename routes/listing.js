@@ -6,6 +6,9 @@ const { isLoggedIn, isOwner, validateListing } = require('../middleware.js');
 
 // Import Our controllers
 const listingController = require('../controllers/listings.js')
+const multer = require('multer')
+const { storage } = require('../cloudConfig.js')
+const upload = multer({ storage })
 
 // Show all Listings
 router.get("/", wrapAsync(listingController.index));
@@ -20,7 +23,7 @@ router.get("/:id", wrapAsync(listingController.showListing));
 
 
 // Create Route: To take response from the new.ejs form 
-router.post("/", validateListing, wrapAsync(listingController.createListing));
+router.post("/", validateListing, upload.single('listing[image]'), wrapAsync(listingController.createListing));
 
 
 // Edit Route: To edit some information in any listing
