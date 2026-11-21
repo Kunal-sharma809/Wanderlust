@@ -31,7 +31,7 @@ router.get("/:id/edit", isLoggedIn, isOwner, wrapAsync(listingController.renderE
 
 
 // Update Route: To update the info sent through put request in edit form
-router.put("/:id", isLoggedIn, isOwner, validateListing, wrapAsync(listingController.updateListing));
+router.put("/:id", isLoggedIn, isOwner, upload.single('listing[image]'), validateListing, wrapAsync(listingController.updateListing));
 
 
 // Delete Listing: To delete the showing listing

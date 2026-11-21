@@ -5,7 +5,7 @@
             <div class="flex flex-col gap-3 w-[40vw]">
                 <h2 class="text-2xl font-semibold">Edit Listing</h2>
 
-                <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" class="flex flex-col gap-5 w-full"
+                <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" enctype="multipart/form-data" class="flex flex-col gap-5 w-full"
                     id="form" novalidate>
                     <div>
                         <label for="title" class=" text-fg-success-strong">Title</label>
@@ -30,10 +30,24 @@
                             Description is required!
                         </p>
                     </div>
+
                     <div>
-                        <label for="image">Image Link</label>
-                        <input type="text" name="listing[image]" placeholder="Enter image URL/Link"
+                        <h3>Original Listing Image</h3>
+                        <div class="h-44 w-66">
+                            <img class="h-full w-full" src="<%= originalImageUrl %>" alt="">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="image">Upload Image</label>
+                        <input type="file" name="listing[image]" placeholder="Upload New Image"
                             class="border px-3 py-2 rounded-lg w-full" value="<%= listing.image.url %>">
+                        <p class="valid-feedback hidden text-green-600 text-sm mt-1">
+                            Looks Good
+                        </p>
+                        <p class="invalid-feedback hidden text-red-600 text-sm mt-1">
+                            Image is required!
+                        </p>
                     </div>
                     <div>
                         <label for="price">Price</label>
