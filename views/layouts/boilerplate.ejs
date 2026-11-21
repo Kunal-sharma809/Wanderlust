@@ -9,12 +9,12 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel='stylesheet' href='https://unpkg.com/maplibre-gl@6.19.0/dist/maplibre-gl.css' />
 </head>
-<body>
+<body class="min-h-screen flex flex-col bg-white text-gray-900 antialiased">
     <%- include("../includes/navbar.ejs") %>
-    <div class="container px-24 py-4 min-h-screen">
+    <main class="container flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-6 min-h-screen">
         <%- include("../includes/flash.ejs") %>
         <%- body %>
-    </div>
+    </main>
     <%- include("../includes/footer.ejs") %>
 
     <script type="module" src="/js/map.js"></script>

@@ -1,81 +1,72 @@
 <% layout('/layouts/boilerplate') -%>
 
-    <body>
-        <div class="flex justify-center items-center py-12">
-            <div class="flex flex-col gap-3 w-[40vw]">
-                <h2 class="text-2xl font-semibold">Create new Listing</h2>
+<div class="flex justify-center py-8 sm:py-12">
+    <div class="w-full max-w-2xl">
+        <h2 class="text-2xl sm:text-3xl font-semibold">Create new Listing</h2>
+        <p class="text-gray-500 mt-1 mb-8">Tell guests about your place. You can edit these details later.</p>
 
-                <form method="POST" action="/listings" class="flex flex-col gap-3 w-full" id="form" enctype="multipart/form-data" novalidate>
-                    <div>
-                        <label for="title" class=" text-fg-success-strong">Title</label>
-                        <input type="text" name="listing[title]" placeholder="Add a catchy title" id="title"
-                            class="bg-success-soft border border-success-subtle text-fg-success-strong px-3 py-2 rounded-lg w-full"
-                            required>
-                        <p class="valid-feedback hidden text-green-600 text-sm mt-1">
-                            Looks Good
-                        </p>
-                        <p class="invalid-feedback hidden text-red-600 text-sm mt-1">
-                            Title is required!
-                        </p>
-                    </div>
-                    <div>
-                        <label for="description">Description</label>
-                        <textarea name="listing[description]" id="" class="border px-3 py-2 rounded-lg w-full"
-                            required></textarea>
-                        <p class="valid-feedback hidden text-green-600 text-sm mt-1">
-                            Looks Good
-                        </p>
-                        <p class="invalid-feedback hidden text-red-600 text-sm mt-1">
-                            Description is required!
-                        </p>
-                    </div>
-                    <div>
-                        <label for="image">Upload image</label>
-                        <input type="file" name="listing[image]"
-                            class="border px-3 py-2 rounded-lg w-full">
-                        <p class="valid-feedback hidden text-green-600 text-sm mt-1">
-                            Looks Good
-                        </p>
-                        <p class="invalid-feedback hidden text-red-600 text-sm mt-1">
-                            Image is required!
-                        </p>
-                    </div>
-                    <div>
-                        <label for="price">Price</label>
-                        <input type="number" name="listing[price]" placeholder="1200"
-                            class="border px-3 py-2 rounded-lg w-full" required>
-                        <p class="valid-feedback hidden text-green-600 text-sm mt-1">
-                            Looks Good
-                        </p>
-                        <p class="invalid-feedback hidden text-red-600 text-sm mt-1">
-                            Price is required!
-                        </p>
-                    </div>
-                    <div>
-                        <label for="location">Location</label>
-                        <input type="text" name="listing[location]" placeholder="Jaipur, Rajasthan"
-                            class="border px-3 py-2 rounded-lg w-full" required>
-                        <p class="valid-feedback hidden text-green-600 text-sm mt-1">
-                            Looks Good
-                        </p>
-                        <p class="invalid-feedback hidden text-red-600 text-sm mt-1">
-                            Location is required!
-                        </p>
-                    </div>
-                    <div>
-                        <label for="country">Country</label>
-                        <input type="text" name="listing[country]" placeholder="India"
-                            class="border px-3 py-2 rounded-lg w-full" required>
-                        <p class="valid-feedback hidden text-green-600 text-sm mt-1">
-                            Looks Good
-                        </p>
-                        <p class="invalid-feedback hidden text-red-600 text-sm mt-1">
-                            Country is required!
-                        </p>
-                    </div>
-                    <button class="bg-[#FF5A5F] text-white px-3 py-2 rounded-lg w-full">Add Listing</button>
-                </form>
+        <form method="POST" action="/listings" enctype="multipart/form-data" class="flex flex-col gap-6 w-full" id="form" novalidate>
+            <div>
+                <label for="title" class="block text-sm font-medium mb-1.5">Title</label>
+                <input type="text" name="listing[title]" placeholder="Add a catchy title" id="title"
+                    class="w-full rounded-xl border border-gray-300 px-4 py-3 focus:outline-none focus:border-black focus:ring-2 focus:ring-black/10"
+                    required>
+                <p class="valid-feedback hidden text-green-600 text-sm mt-1">Looks Good</p>
+                <p class="invalid-feedback hidden text-red-600 text-sm mt-1">Title is required!</p>
             </div>
-        </div>
 
-    </body>
+            <div>
+                <label for="description" class="block text-sm font-medium mb-1.5">Description</label>
+                <textarea name="listing[description]" id="description" rows="5"
+                    placeholder="Describe the space, the neighbourhood and what makes it special"
+                    class="w-full rounded-xl border border-gray-300 px-4 py-3 focus:outline-none focus:border-black focus:ring-2 focus:ring-black/10"
+                    required></textarea>
+                <p class="valid-feedback hidden text-green-600 text-sm mt-1">Looks Good</p>
+                <p class="invalid-feedback hidden text-red-600 text-sm mt-1">Description is required!</p>
+            </div>
+
+            <div>
+                <label for="image" class="block text-sm font-medium mb-1.5">Upload image</label>
+                <input type="file" name="listing[image]" id="image" accept="image/*"
+                    class="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm file:mr-4 file:rounded-lg file:border-0 file:bg-gray-100 file:px-4 file:py-2 file:text-sm file:font-medium hover:file:bg-gray-200">
+                <p class="text-gray-500 text-xs mt-1">A bright, high-quality photo gets more attention.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                    <label for="price" class="block text-sm font-medium mb-1.5">Price per night (&#8377;)</label>
+                    <input type="number" name="listing[price]" id="price" placeholder="1200" min="0"
+                        class="w-full rounded-xl border border-gray-300 px-4 py-3 focus:outline-none focus:border-black focus:ring-2 focus:ring-black/10"
+                        required>
+                    <p class="valid-feedback hidden text-green-600 text-sm mt-1">Looks Good</p>
+                    <p class="invalid-feedback hidden text-red-600 text-sm mt-1">Price is required!</p>
+                </div>
+                <div>
+                    <label for="country" class="block text-sm font-medium mb-1.5">Country</label>
+                    <input type="text" name="listing[country]" id="country" placeholder="India"
+                        class="w-full rounded-xl border border-gray-300 px-4 py-3 focus:outline-none focus:border-black focus:ring-2 focus:ring-black/10"
+                        required>
+                    <p class="valid-feedback hidden text-green-600 text-sm mt-1">Looks Good</p>
+                    <p class="invalid-feedback hidden text-red-600 text-sm mt-1">Country is required!</p>
+                </div>
+            </div>
+
+            <div>
+                <label for="location" class="block text-sm font-medium mb-1.5">Location</label>
+                <input type="text" name="listing[location]" id="location" placeholder="Jaipur, Rajasthan"
+                    class="w-full rounded-xl border border-gray-300 px-4 py-3 focus:outline-none focus:border-black focus:ring-2 focus:ring-black/10"
+                    required>
+                <p class="valid-feedback hidden text-green-600 text-sm mt-1">Looks Good</p>
+                <p class="invalid-feedback hidden text-red-600 text-sm mt-1">Location is required!</p>
+            </div>
+
+            <div class="flex items-center gap-3 pt-2">
+                <a href="/listings" class="px-5 py-3 rounded-xl border border-gray-300 font-medium hover:bg-gray-50 transition-colors">Cancel</a>
+                <button type="submit"
+                    class="flex-1 bg-[#FF385C] hover:bg-[#E31C5F] text-white font-medium px-5 py-3 rounded-xl cursor-pointer transition-colors">
+                    Add Listing
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

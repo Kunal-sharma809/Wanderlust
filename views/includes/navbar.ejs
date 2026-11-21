@@ -1,27 +1,37 @@
-<nav class="flex justify-between items-center px-24 py-4 sticky top-0 bg-white shadow-lg rounded-lg">
-    <div class="logo">
-        <img src="/images/logo.webp" class="w-28 h-14 text-black object-cover" alt="Airbnb logo">
+<nav class="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4 px-4 sm:px-6 lg:px-10 py-3">
+        <a href="/listings" class="logo shrink-0">
+            <img src="/images/logo.webp" class="h-10 w-28 object-contain" alt="Airbnb logo">
+        </a>
+
+        <ul class="flex items-center gap-4 sm:gap-6 text-sm font-medium text-gray-700">
+            <li class="hidden sm:block"><a href="/listings" class="hover:text-black transition-colors">Home</a></li>
+            <li><a href="/listings" class="hover:text-black transition-colors">All listings</a></li>
+            <li><a href="/listings/new" class="hover:text-black transition-colors">New Listing</a></li>
+        </ul>
+
+        <ul class="flex items-center gap-3 text-sm font-medium">
+            <% if (!currUser) { %>
+                <li class="hidden sm:block">
+                    <a href="/signup" class="px-3 py-2 rounded-full hover:bg-gray-100 transition-colors">Sign Up</a>
+                </li>
+                <li class="hidden sm:flex bg-gray-100 p-2 rounded-full">
+                    <img class="h-5 w-5" src="/images/globe.svg" alt="Language">
+                </li>
+                <li>
+                    <a href="/login" class="px-4 py-2 rounded-full border border-gray-300 hover:shadow-md transition-shadow">Login</a>
+                </li>
+            <% } else { %>
+                <li class="hidden sm:flex items-center gap-2 text-gray-700">
+                    <span class="h-8 w-8 rounded-full bg-gray-900 text-white flex items-center justify-center uppercase">
+                        <%= currUser.username ? currUser.username.charAt(0) : "U" %>
+                    </span>
+                    <span class="max-w-28 truncate"><%= currUser.username %></span>
+                </li>
+                <li>
+                    <a href="/logout" class="px-4 py-2 rounded-full border border-gray-300 hover:shadow-md transition-shadow">Sign out</a>
+                </li>
+            <% } %>
+        </ul>
     </div>
-    <ul class="flex gap-8">
-        <li><a href="/listings">Home</a></li>
-        <li><a href="/listings">All listings</a></li>
-        <form method="GET" action="/listings/new">
-            <button class="cursor-pointer">New Listing</button>
-        </form>
-        
-    </ul>
-    <ul class="flex items-center gap-4">
-        <% if(!currUser) { %>
-            <li><a href="/signup">Become a host</a></li>
-            <li class="bg-gray-100 p-2 rounded-full">
-                <img class="h-5 w-5" src="/images/globe.svg" alt="">
-            </li>
-            <li><a href="/login">Login</a></li>
-        <% } else { %>
-            <!-- <li class="bg-gray-100 p-2 px-3 rounded-full"> <a href="/login">SignIn</a>
-                <img class="h-5 w-5" src="/images/hamburger.svg" alt="">
-            </li> -->
-            <li class="bg-gray-100 p-2 px-3 rounded-full"> <a href="/logout">SignOut</a></li>
-        <% } %>
-    </ul>
 </nav>
